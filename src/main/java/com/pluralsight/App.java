@@ -6,18 +6,23 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
     static Scanner input = new Scanner(System.in);
     static ArrayList<Transaction> transactions = getTransactions();
     static LocalDateTime localDateTime = LocalDateTime.now();
+    static Transaction transaction = new Transaction();
+
     public static void main(String[] args) {
+
         runHomeScreen();
 
-        //addDeposit();
 
+
+    }
+
+    private static void makePayment(){
 
     }
 
@@ -40,14 +45,16 @@ public class App {
 
         LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        //transactions.add(new Transaction(dateStamp, timeStamp, depositDescription, depositVendor, depositAmount));
+
         Transaction transaction = new Transaction(dateStamp, timeStamp, depositDescription, depositVendor, depositAmount);
 
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
             bufferedWriter.write(transaction.toCSV());
-
             bufferedWriter.close();
+            System.out.print("\nTransaction has been added!");
+            pressEnterToContinue();
+
         } catch (IOException e) {
             System.out.println("File not found.");;
         }
@@ -168,7 +175,7 @@ public class App {
             }
 
             switch (mainScreenOption){
-                case "d"-> System.out.println("d");//addDeposit();
+                case "d"-> addDeposit();
                 case "p"-> System.out.println("p");
                 case "l"-> runLedgerScreen();
                 case "x"-> System.out.println("Goodbye!");
