@@ -31,13 +31,16 @@ public class App {
         //System.out.print("Amount: ");
         //double depositAmount = input.nextDouble();
         double depositAmount = promptForDouble("Amount: ");
+        while(depositAmount <= 0){
+            System.out.println("Deposit amount can't be less than or equal to 0.");
+            depositAmount = promptForDouble("Amount: ");
+        }
         //input.nextDouble();
 
         LocalDateTime localDateTime = LocalDateTime.now();
 
         String timeStamp = localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-        System.out.println(timeStamp);
 
     }
 
@@ -56,13 +59,18 @@ public class App {
     }
 
     private static Double promptForDouble(String amount){
-        while (true){
+        while (true) {
             System.out.print(amount);
-            try {
-                return Double.parseDouble(input.nextLine().trim());
-            }catch (NumberFormatException e){
-                System.out.println("Please enter a proper amount.");
-            }
+            //double answer = input.nextDouble();
+
+                try {
+                    return Double.parseDouble(input.nextLine().trim());
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a proper amount.");
+                }
+//            }
+
+
         }
     }
 
