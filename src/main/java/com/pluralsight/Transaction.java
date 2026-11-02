@@ -68,4 +68,9 @@ public class Transaction {
                 ", amount=" + amount +
                 '}';
     }
+
+    public String toCSV() {
+        return date + "|" + time + "|" + description + "|" + vendor + "|" +
+                String.format("%.2f", amount);
+    }
 }

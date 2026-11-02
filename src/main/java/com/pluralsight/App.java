@@ -1,6 +1,9 @@
 package com.pluralsight;
 
+import java.io.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -9,37 +12,45 @@ import java.util.Scanner;
 public class App {
     static Scanner input = new Scanner(System.in);
     static ArrayList<Transaction> transactions = getTransactions();
-
+    static LocalDateTime localDateTime = LocalDateTime.now();
     public static void main(String[] args) {
-        //runHomeScreen();
+        runHomeScreen();
 
+        //addDeposit();
+
+
+    }
+
+    private static void addDeposit() {
         System.out.println("""
                 
                 ===============================
                 \tEnter Deposit Information
                 ===============================""");
-//        System.out.print("Description: ");
-//        String depositDescription = input.nextLine().trim();
+
         String depositDescription = promptForString("Description: ");
-        //input.nextLine();
 
-//        System.out.print("Vendor: ");
-//        String depositVendor = input.nextLine();
         String depositVendor = promptForString("Vendor: ");
-        //input.nextLine();
 
-        //System.out.print("Amount: ");
-        //double depositAmount = input.nextDouble();
         double depositAmount = promptForDouble("Amount: ");
         while(depositAmount <= 0){
             System.out.println("Deposit amount can't be less than or equal to 0.");
             depositAmount = promptForDouble("Amount: ");
         }
-        //input.nextDouble();
 
-        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        //transactions.add(new Transaction(dateStamp, timeStamp, depositDescription, depositVendor, depositAmount));
+        Transaction transaction = new Transaction(dateStamp, timeStamp, depositDescription, depositVendor, depositAmount);
 
-        String timeStamp = localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
+            bufferedWriter.write(transaction.toCSV());
+
+            bufferedWriter.close();
+        } catch (IOException e) {
+            System.out.println("File not found.");;
+        }
 
 
     }
@@ -157,7 +168,7 @@ public class App {
             }
 
             switch (mainScreenOption){
-                case "d"-> System.out.println("d");
+                case "d"-> System.out.println("d");//addDeposit();
                 case "p"-> System.out.println("p");
                 case "l"-> runLedgerScreen();
                 case "x"-> System.out.println("Goodbye!");
