@@ -16,36 +16,42 @@ public class App {
 
     private static void runReportsScreen() {
         String reportsScreenOption;
-        //do {
-        System.out.print("""
-                    ==================
-                    \tReports Screen
-                    ==================
-                    1) Month To Date
-                    2) Previous Month
-                    3) Year To Date
-                    4) Previous Year
-                    5) Search by Vendor
-                    0) Back:\s""");
-        reportsScreenOption = input.nextLine().trim();
-        input.nextLine();
+        do {
+            System.out.print("""
+                        
+                        ==================
+                        \tReports Screen
+                        ==================
+                        1) Month To Date
+                        2) Previous Month
+                        3) Year To Date
+                        4) Previous Year
+                        5) Search by Vendor
+                        0) Back:\s""");
+            reportsScreenOption = input.nextLine().trim();
+            //input.nextLine();
 
-        switch (reportsScreenOption){
-            case "1"-> System.out.println("a");
-            case "2"-> System.out.println("d");
-            case "3"-> System.out.println("p");
-            case "4"-> System.out.println("l");
-            case "5"-> System.out.println("5");
-            case "0"-> System.out.println("Going To Ledger Screen..");//System.out.println("Going To Home Screen...");
-            default -> System.out.println("Invalid Input: Letter entered is not valid.");
-        }
+            pressEnterToContinue();
+            switch (reportsScreenOption){
+                case "1"-> System.out.println("a");
+                case "2"-> System.out.println("d");
+                case "3"-> System.out.println("p");
+                case "4"-> System.out.println("l");
+                case "5"-> System.out.println("5");
+                case "0"-> System.out.println("Returning to ledger..");//System.out.println("Going To Home Screen...");
+                default -> System.out.println("Invalid Input: Letter entered is not valid, try Again.");
+            }
+
+
+        } while (!reportsScreenOption.equals("0"));
     }
 
 
     private static void runLedgerScreen() {
         String ledgerScreenOption;
-        //do {
+        do {
             System.out.print("""
+                    
                     ==================
                     \tLedger Screen
                     ==================
@@ -55,27 +61,28 @@ public class App {
                     R) Reports
                     H) Home:\s""");
             ledgerScreenOption = input.nextLine().toLowerCase().trim();
-            input.nextLine();
+            //input.nextLine();
 
+            pressEnterToContinue();
             switch (ledgerScreenOption){
                 case "a"-> System.out.println("a");
                 case "d"-> System.out.println("d");
                 case "p"-> System.out.println("p");
                 case "r"-> runReportsScreen();
-                case "h"-> System.out.println("Going To Home Screen..");//System.out.println("Going To Home Screen...");
+                case "h"-> System.out.println("Returning To Home Screen..");//System.out.println("Going To Home Screen...");
                 default -> System.out.println("Invalid Input: Letter entered is not valid.");
             }
-//            if(!ledgerScreenOption.equals("h")) {
-//                pressEnterToContinue();
-//            }
 
-        //} while (!ledgerScreenOption.equals("x"));
+
+
+        } while (!ledgerScreenOption.equals("h"));
     }
 
     private static void runHomeScreen() {
         String mainScreenOption;
         do {
             System.out.print("""
+                    
                     ==================
                     \tMain Screen
                     ==================
@@ -85,6 +92,9 @@ public class App {
                     X) Exit:\s""");
             mainScreenOption = input.nextLine().toLowerCase().trim();
             //input.nextLine();
+            if(!mainScreenOption.equals("x")) {
+                pressEnterToContinue();
+            }
 
             switch (mainScreenOption){
                 case "d"-> System.out.println("d");
@@ -93,9 +103,7 @@ public class App {
                 case "x"-> System.out.println("Goodbye!");
                 default -> System.out.println("Invalid Input: Letter entered is not valid.");
             }
-            if(!mainScreenOption.equals("x")) {
-                pressEnterToContinue();
-            }
+
 
         } while (!mainScreenOption.equals("x"));
     }
