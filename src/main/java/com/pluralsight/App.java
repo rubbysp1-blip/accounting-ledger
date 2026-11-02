@@ -1,17 +1,69 @@
 package com.pluralsight;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
     static Scanner input = new Scanner(System.in);
-    //static ArrayList<>
+    static ArrayList<Transaction> transactions = getTransactions();
+
     public static void main(String[] args) {
-        runHomeScreen();
+        //runHomeScreen();
 
-        //runReportsScreen();
+        System.out.println("""
+                
+                ===============================
+                \tEnter Deposit Information
+                ===============================""");
+//        System.out.print("Description: ");
+//        String depositDescription = input.nextLine().trim();
+        String depositDescription = promptForString("Description: ");
+        //input.nextLine();
 
+//        System.out.print("Vendor: ");
+//        String depositVendor = input.nextLine();
+        String depositVendor = promptForString("Vendor: ");
+        //input.nextLine();
+
+        //System.out.print("Amount: ");
+        //double depositAmount = input.nextDouble();
+        double depositAmount = promptForDouble("Amount: ");
+        //input.nextDouble();
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        String timeStamp = localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+        System.out.println(timeStamp);
+
+    }
+
+    private static String promptForString(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String answer = input.nextLine().trim();
+            if (answer.isEmpty()) {
+                System.out.println("This can't be blank.");
+            } else if (answer.contains("|")) {
+                System.out.println("Please don't use the | character.");
+            } else {
+                return answer;
+            }
+        }
+    }
+
+    private static Double promptForDouble(String amount){
+        while (true){
+            System.out.print(amount);
+            try {
+                return Double.parseDouble(input.nextLine().trim());
+            }catch (NumberFormatException e){
+                System.out.println("Please enter a proper amount.");
+            }
+        }
     }
 
     private static void runReportsScreen() {
@@ -106,6 +158,10 @@ public class App {
 
 
         } while (!mainScreenOption.equals("x"));
+    }
+
+    public static ArrayList<Transaction> getTransactions(){
+        return new ArrayList<Transaction>();
     }
 
     private static void pressEnterToContinue() {
