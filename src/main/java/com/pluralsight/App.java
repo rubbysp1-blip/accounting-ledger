@@ -22,6 +22,8 @@ public class App {
 
     }
 
+
+
     private static void makePayment(){
         System.out.println("""
                 
@@ -147,7 +149,7 @@ public class App {
                 case "4"-> System.out.println("l");
                 case "5"-> System.out.println("5");
                 case "0"-> System.out.println("Returning to ledger..");//System.out.println("Going To Home Screen...");
-                default -> System.out.println("Invalid Input: Letter entered is not valid, try Again.");
+                default -> System.out.println("Invalid Input: Number entered is not valid, try Again.");
             }
 
 
