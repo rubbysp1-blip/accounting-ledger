@@ -101,7 +101,7 @@ public class App {
                 case "p"-> System.out.println("p");
                 case "l"-> runLedgerScreen();
                 case "x"-> System.out.println("Goodbye!");
-                default -> System.out.println("Invalid Input: Letter entered is not valid.");
+                default -> System.out.println("Invalid Input: Letter entered is not valid, try again.");
             }
 
 
