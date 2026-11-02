@@ -23,7 +23,37 @@ public class App {
     }
 
     private static void makePayment(){
+        System.out.println("""
+                
+                ===============================
+                \tEnter Payment Information
+                ===============================""");
 
+        String paymentDescription = promptForString("Description: ");
+
+        String paymentVendor = promptForString("Vendor: ");
+
+        double paymentAmount = promptForDouble("Amount: ");
+        while(paymentAmount <= 0){
+            System.out.println("Deposit amount can't be less than or equal to 0.");
+            paymentAmount = promptForDouble("Amount: ");
+        }
+
+        LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        transaction = new Transaction(dateStamp, timeStamp, paymentDescription, paymentVendor, -Math.abs(paymentAmount));
+
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
+            bufferedWriter.write(transaction.toCSV());
+            bufferedWriter.close();
+            System.out.print("\nPayment has been recorded!");
+            pressEnterToContinue();
+
+        } catch (IOException e) {
+            System.out.println("File not found.");;
+        }
     }
 
     private static void addDeposit() {
@@ -46,7 +76,7 @@ public class App {
         LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-        Transaction transaction = new Transaction(dateStamp, timeStamp, depositDescription, depositVendor, depositAmount);
+        transaction = new Transaction(dateStamp, timeStamp, depositDescription, depositVendor, depositAmount);
 
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
@@ -176,7 +206,7 @@ public class App {
 
             switch (mainScreenOption){
                 case "d"-> addDeposit();
-                case "p"-> System.out.println("p");
+                case "p"-> makePayment();
                 case "l"-> runLedgerScreen();
                 case "x"-> System.out.println("Goodbye!");
                 default -> System.out.println("Invalid Input: Letter entered is not valid, try again.");
