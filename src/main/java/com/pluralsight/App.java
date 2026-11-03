@@ -4,6 +4,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,7 +21,21 @@ public class App {
 
         //runHomeScreen();
 
-        displayPreviousMonth();
+        boolean beforeTodayDate;
+        String year = String.valueOf(localDateTime.getYear());
+        //String month = String.valueOf(localDateTime.getMonthValue());
+        //LocalDate day = LocalDate.parse(String.valueOf(localDateTime.getDayOfMonth()));
+
+        for(Transaction transaction : transactions){
+            if(transaction != null){
+                //String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
+                beforeTodayDate = transaction.getDate().isAfter(ChronoLocalDate.from(localDateTime));
+                if(transaction.getDate().toString().contains(year) && !beforeTodayDate){
+                    System.out.println(transaction.toString());
+                }
+            }
+        }
+        pressEnterToContinue();
 
     }
 
@@ -47,7 +62,7 @@ public class App {
         for(Transaction transaction : transactions){
             if(transaction != null){
                 String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
-                if(tokens[0].equals(year) && tokens[1].equals(month) && Integer.parseInt(tokens[2]) < day){
+                if(tokens[0].equals(year) && tokens[1].equals(month) && Integer.parseInt(tokens[2]) <= day){
                     System.out.println(transaction.toString());
                 }
             }
