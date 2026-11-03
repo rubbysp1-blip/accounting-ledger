@@ -18,8 +18,25 @@ public class App {
     public static void main(String[] args) {
         loadTransactions();
 
-       runHomeScreen();
+        //runHomeScreen();
 
+        displayPreviousMonth();
+
+    }
+
+    private static void displayPreviousMonth() {
+        String year = String.valueOf(localDateTime.getYear());
+        int month = Integer.parseInt(String.valueOf(localDateTime.getMonthValue())) - 1;
+
+        for(Transaction transaction : transactions){
+            if(transaction != null){
+                String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
+                if(tokens[0].equals(year) && Integer.parseInt(tokens[1]) == month){
+                    System.out.println(transaction.toString());
+                }
+            }
+        }
+        pressEnterToContinue();
     }
 
     private static void displayMonthToDate() {
@@ -198,7 +215,7 @@ public class App {
 
             switch (reportsScreenOption){
                 case "1"-> displayMonthToDate();
-                case "2"-> System.out.println("d");
+                case "2"-> displayPreviousMonth();
                 case "3"-> System.out.println("p");
                 case "4"-> System.out.println("l");
                 case "5"-> System.out.println("5");
