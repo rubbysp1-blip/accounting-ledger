@@ -18,15 +18,29 @@ public class App {
     public static void main(String[] args) {
         loadTransactions();
 
-        runHomeScreen();
+       // runHomeScreen();
 
-        //displayDeposits();
+        String year = String.valueOf(localDateTime.getYear());
+        String month = String.valueOf(localDateTime.getMonthValue());
+        int day = Integer.parseInt(String.valueOf(localDateTime.getDayOfMonth()));
+
+        for(Transaction transaction : transactions){
+            if(transaction != null){
+                String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
+                if(tokens[0].equals(year) && tokens[1].equals(month) && Integer.parseInt(tokens[2]) < day){
+                    System.out.println(transaction.toCSV());
+                }
+
+            }
+        }//System.out.print(localDateTime.getYear());
+        //pressEnterToContinue();
+
     }
 
     private static void displayDeposits() {
         for(Transaction transaction : transactions){
             if(transaction != null && transaction.getAmount() > 0){
-                System.out.print(transaction.toCSV() + "\n");
+                System.out.print(transaction.toCSV());
             }
         }
         pressEnterToContinue();
@@ -35,8 +49,15 @@ public class App {
     private static void displayPayments() {
         for(Transaction transaction : transactions){
             if(transaction != null && transaction.getAmount() < 0){
-                System.out.print(transaction.toCSV() + "\n");
+                System.out.print(transaction.toCSV());
             }
+        }
+        pressEnterToContinue();
+    }
+
+    private static void displayAllEntries() {
+        for(Transaction transaction : transactions){
+            System.out.println(transaction.toCSV());
         }
         pressEnterToContinue();
     }
@@ -47,22 +68,16 @@ public class App {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("transactions.csv"));
             bufferedReader.readLine();
             while((line = bufferedReader.readLine()) != null){
-
-                String[] tokens = line.split(Pattern.quote("|"));
-                transaction = new Transaction(LocalDate.parse(tokens[0]), LocalTime.parse(tokens[1]), tokens[2], tokens[3], Double.parseDouble(tokens[4]));
-                transactions.add(transaction);
+                if(!line.isBlank()){
+                    String[] tokens = line.split(Pattern.quote("|"));
+                    transaction = new Transaction(LocalDate.parse(tokens[0]), LocalTime.parse(tokens[1]), tokens[2], tokens[3], Double.parseDouble(tokens[4]));
+                    transactions.add(transaction);
+                }
             }
+            bufferedReader.close();
         } catch (IOException e) {
             System.out.print("File not found.");;
         }
-    }
-
-    private static void displayAllEntries() {
-        for(Transaction transaction : transactions){
-                System.out.println(transaction.toCSV());
-        }
-        pressEnterToContinue();
-
     }
 
     private static void makePayment(){
@@ -97,7 +112,6 @@ public class App {
         } catch (IOException e) {
             System.out.println("File not found.");;
         }
-
     }
 
     private static void addDeposit() {
@@ -180,9 +194,7 @@ public class App {
                         5) Search by Vendor
                         0) Back:\s""");
             reportsScreenOption = input.nextLine().trim();
-            //input.nextLine();
 
-            //pressEnterToContinue();
             switch (reportsScreenOption){
                 case "1"-> System.out.println("a");
                 case "2"-> System.out.println("d");
@@ -192,7 +204,6 @@ public class App {
                 case "0"-> System.out.println("Returning to ledger..");//System.out.println("Going To Home Screen...");
                 default -> System.out.println("Invalid Input: Number entered is not valid, try Again.");
             }
-
         } while (!reportsScreenOption.equals("0"));
     }
 
@@ -211,9 +222,7 @@ public class App {
                     R) Reports
                     H) Home:\s""");
             ledgerScreenOption = input.nextLine().toLowerCase().trim();
-            //input.nextLine();
 
-            //pressEnterToContinue();
             switch (ledgerScreenOption){
                 case "a"-> displayAllEntries();
                 case "d"-> displayDeposits();
@@ -222,9 +231,6 @@ public class App {
                 case "h"-> System.out.println("Returning To Home Screen..");//System.out.println("Going To Home Screen...");
                 default -> System.out.println("Invalid Input: Letter entered is not valid.");
             }
-
-
-
         } while (!ledgerScreenOption.equals("h"));
     }
 
@@ -241,10 +247,6 @@ public class App {
                     L) Ledger
                     X) Exit:\s""");
             homeScreenOption = input.nextLine().toLowerCase().trim();
-            //input.nextLine();
-//            if(!homeScreenOption.equals("x")) {
-//                pressEnterToContinue();
-//            }
 
             switch (homeScreenOption){
                 case "d"-> addDeposit();
@@ -253,8 +255,6 @@ public class App {
                 case "x"-> System.out.println("Goodbye!");
                 default -> System.out.println("Invalid Input: Letter entered is not valid, try again.");
             }
-
-
         } while (!homeScreenOption.equals("x"));
     }
 
