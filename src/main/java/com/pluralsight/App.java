@@ -28,14 +28,19 @@ public class App {
 
     private static void displayPreviousYear() {
         int year = Integer.parseInt(String.valueOf(localDateTime.getYear())) - 1;
+        boolean transactionMade = false;
 
         for(Transaction transaction : transactions){
             if(transaction != null){
                 String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
                 if(Integer.parseInt(tokens[0]) == year){
                     System.out.println(transaction.toString());
+                    transactionMade = true;
                 }
             }
+        }
+        if(!transactionMade){
+            System.out.println("No transactions were found.");
         }
         pressEnterToContinue();
     }
