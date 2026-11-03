@@ -25,6 +25,15 @@ public class App {
 
     private static void displayDeposits() {
         for(Transaction transaction : transactions){
+            if(transaction != null && transaction.getAmount() > 0){
+                System.out.print(transaction.toCSV() + "\n");
+            }
+        }
+        pressEnterToContinue();
+    }
+
+    private static void displayPayments() {
+        for(Transaction transaction : transactions){
             if(transaction != null && transaction.getAmount() < 0){
                 System.out.print(transaction.toCSV() + "\n");
             }
@@ -53,27 +62,7 @@ public class App {
                 System.out.println(transaction.toCSV());
         }
         pressEnterToContinue();
-//        try {
-//            for(Transaction transaction : transactions){
-//                System.out.println(transaction);
-//            }
-//            String line;
-//            BufferedReader bufferedReader = new BufferedReader(new FileReader("transactions.csv"));
-//            bufferedReader.readLine();
-//            while((line = bufferedReader.readLine()) != null){
-//
-//                String[] tokens = line.split(Pattern.quote("|"));
-//                transaction = new Transaction(LocalDate.parse(tokens[0]), LocalTime.parse(tokens[1]), tokens[2], tokens[3], Double.parseDouble(tokens[4]));
-//
-//                System.out.println("-------------------------------");
-//                System.out.println(line);
-//
-//                pressEnterToContinue();
-//
-//            }
-//        } catch (IOException e) {
-//            System.out.print("File not found.");;
-//        }
+
     }
 
     private static void makePayment(){
@@ -228,7 +217,7 @@ public class App {
             switch (ledgerScreenOption){
                 case "a"-> displayAllEntries();
                 case "d"-> displayDeposits();
-                case "p"-> System.out.println("p");
+                case "p"-> displayPayments();
                 case "r"-> runReportsScreen();
                 case "h"-> System.out.println("Returning To Home Screen..");//System.out.println("Going To Home Screen...");
                 default -> System.out.println("Invalid Input: Letter entered is not valid.");
