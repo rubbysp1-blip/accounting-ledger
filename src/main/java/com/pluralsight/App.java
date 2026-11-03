@@ -20,8 +20,6 @@ public class App {
 
        runHomeScreen();
 
-        //displayMonthToDate();
-
     }
 
     private static void displayMonthToDate() {
@@ -33,9 +31,8 @@ public class App {
             if(transaction != null){
                 String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
                 if(tokens[0].equals(year) && tokens[1].equals(month) && Integer.parseInt(tokens[2]) < day){
-                    System.out.println(transaction.toCSV());
+                    System.out.println(transaction.toString());
                 }
-
             }
         }
         pressEnterToContinue();

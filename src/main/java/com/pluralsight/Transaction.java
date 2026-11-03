@@ -63,13 +63,11 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
-                "date=" + date +
-                ", time=" + time +
-                ", description='" + description + '\'' +
-                ", vendor='" + vendor + '\'' +
-                ", amount=" + amount +
-                '}';
+        return "Date|" + date +
+                ", Time|" + time +
+                ", Description|'" + description + '\'' +
+                ", vendor|'" + vendor + '\'' +
+                ", Amount|" + amount;
     }
 
     public String toCSV() {
