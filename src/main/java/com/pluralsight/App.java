@@ -21,14 +21,31 @@ public class App {
 
         //runHomeScreen();
 
-        boolean beforeTodayDate;
-        String year = String.valueOf(localDateTime.getYear());
-        //String month = String.valueOf(localDateTime.getMonthValue());
-        //LocalDate day = LocalDate.parse(String.valueOf(localDateTime.getDayOfMonth()));
+
+
+
+    }
+
+    private static void displayPreviousYear() {
+        int year = Integer.parseInt(String.valueOf(localDateTime.getYear())) - 1;
 
         for(Transaction transaction : transactions){
             if(transaction != null){
-                //String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
+                String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
+                if(Integer.parseInt(tokens[0]) == year){
+                    System.out.println(transaction.toString());
+                }
+            }
+        }
+        pressEnterToContinue();
+    }
+
+    private static void displayYearToDate() {
+        boolean beforeTodayDate;
+        String year = String.valueOf(localDateTime.getYear());
+
+        for(Transaction transaction : transactions){
+            if(transaction != null){
                 beforeTodayDate = transaction.getDate().isAfter(ChronoLocalDate.from(localDateTime));
                 if(transaction.getDate().toString().contains(year) && !beforeTodayDate){
                     System.out.println(transaction.toString());
@@ -36,7 +53,6 @@ public class App {
             }
         }
         pressEnterToContinue();
-
     }
 
     private static void displayPreviousMonth() {
@@ -231,8 +247,8 @@ public class App {
             switch (reportsScreenOption){
                 case "1"-> displayMonthToDate();
                 case "2"-> displayPreviousMonth();
-                case "3"-> System.out.println("p");
-                case "4"-> System.out.println("l");
+                case "3"-> displayYearToDate();
+                case "4"-> displayPreviousYear();
                 case "5"-> System.out.println("5");
                 case "0"-> System.out.println("Returning to ledger..");//System.out.println("Going To Home Screen...");
                 default -> System.out.println("Invalid Input: Number entered is not valid, try Again.");
