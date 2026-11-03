@@ -56,6 +56,7 @@ public class App {
         } catch (IOException e) {
             System.out.println("File not found.");;
         }
+
     }
 
     private static void addDeposit() {
@@ -90,7 +91,6 @@ public class App {
         } catch (IOException e) {
             System.out.println("File not found.");;
         }
-
 
     }
 
@@ -141,7 +141,7 @@ public class App {
             reportsScreenOption = input.nextLine().trim();
             //input.nextLine();
 
-            pressEnterToContinue();
+            //pressEnterToContinue();
             switch (reportsScreenOption){
                 case "1"-> System.out.println("a");
                 case "2"-> System.out.println("d");
@@ -166,14 +166,14 @@ public class App {
                     \tLedger Screen
                     ==================
                     A) All
-                    D) Deposit
+                    D) Deposits
                     P) Payments
                     R) Reports
                     H) Home:\s""");
             ledgerScreenOption = input.nextLine().toLowerCase().trim();
             //input.nextLine();
 
-            pressEnterToContinue();
+            //pressEnterToContinue();
             switch (ledgerScreenOption){
                 case "a"-> System.out.println("a");
                 case "d"-> System.out.println("d");
@@ -189,24 +189,24 @@ public class App {
     }
 
     private static void runHomeScreen() {
-        String mainScreenOption;
+        String homeScreenOption;
         do {
             System.out.print("""
                     
                     ==================
-                    \tMain Screen
+                    \tHome Screen
                     ==================
                     D) Add Deposit
                     P) Make Payment
                     L) Ledger
                     X) Exit:\s""");
-            mainScreenOption = input.nextLine().toLowerCase().trim();
+            homeScreenOption = input.nextLine().toLowerCase().trim();
             //input.nextLine();
-            if(!mainScreenOption.equals("x")) {
-                pressEnterToContinue();
-            }
+//            if(!homeScreenOption.equals("x")) {
+//                pressEnterToContinue();
+//            }
 
-            switch (mainScreenOption){
+            switch (homeScreenOption){
                 case "d"-> addDeposit();
                 case "p"-> makePayment();
                 case "l"-> runLedgerScreen();
@@ -215,7 +215,7 @@ public class App {
             }
 
 
-        } while (!mainScreenOption.equals("x"));
+        } while (!homeScreenOption.equals("x"));
     }
 
     public static ArrayList<Transaction> getTransactions(){
