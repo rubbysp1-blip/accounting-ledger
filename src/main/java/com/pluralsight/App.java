@@ -18,8 +18,13 @@ public class App {
     public static void main(String[] args) {
         loadTransactions();
 
-       // runHomeScreen();
+       runHomeScreen();
 
+        //displayMonthToDate();
+
+    }
+
+    private static void displayMonthToDate() {
         String year = String.valueOf(localDateTime.getYear());
         String month = String.valueOf(localDateTime.getMonthValue());
         int day = Integer.parseInt(String.valueOf(localDateTime.getDayOfMonth()));
@@ -32,9 +37,8 @@ public class App {
                 }
 
             }
-        }//System.out.print(localDateTime.getYear());
-        //pressEnterToContinue();
-
+        }
+        pressEnterToContinue();
     }
 
     private static void displayDeposits() {
@@ -196,7 +200,7 @@ public class App {
             reportsScreenOption = input.nextLine().trim();
 
             switch (reportsScreenOption){
-                case "1"-> System.out.println("a");
+                case "1"-> displayMonthToDate();
                 case "2"-> System.out.println("d");
                 case "3"-> System.out.println("p");
                 case "4"-> System.out.println("l");
