@@ -230,19 +230,21 @@ public class App {
                 ===============================""");
 
         String paymentDescription = promptForString("Description: ");
-
         String paymentVendor = promptForString("Vendor: ");
-
         double paymentAmount = promptForDouble("Amount: ");
         while(paymentAmount <= 0){
             System.out.println("Payment amount can't be less than or equal to 0.");
             paymentAmount = promptForDouble("Amount: ");
         }
 
+        filterAddPayment(paymentDescription, paymentVendor, paymentAmount);
+    }
+
+    private static void filterAddPayment(String paymentDescription, String paymentVendor, double paymentAmount) {
         LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-        Transaction transaction = new Transaction(dateStamp, timeStamp, paymentDescription, paymentVendor, -paymentAmount); //-Math.abs(paymentAmount
+        Transaction transaction = new Transaction(dateStamp, timeStamp, paymentDescription, paymentVendor, -paymentAmount);
 
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
@@ -264,15 +266,18 @@ public class App {
                 ===============================""");
 
         String depositDescription = promptForString("Description: ");
-
         String depositVendor = promptForString("Vendor: ");
-
         double depositAmount = promptForDouble("Amount: ");
         while(depositAmount <= 0){
             System.out.println("Deposit amount can't be less than or equal to 0.");
             depositAmount = promptForDouble("Amount: ");
         }
 
+        filterAddDeposit(depositDescription, depositVendor, depositAmount);
+
+    }
+
+    private static void filterAddDeposit(String depositDescription, String depositVendor, double depositAmount) {
         LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
@@ -288,7 +293,6 @@ public class App {
         } catch (IOException e) {
             System.out.println("File not found.");;
         }
-
     }
 
     private static String promptForString(String prompt) {
@@ -392,6 +396,7 @@ public class App {
                 default -> System.out.println("\nInvalid Input: Letter entered is not valid, try again.");
             }
         } while (!homeScreenOption.equals("x"));
+        input.close();
     }
 
     public static ArrayList<Transaction> getTransactions(){
