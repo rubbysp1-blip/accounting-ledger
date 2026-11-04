@@ -14,13 +14,11 @@ public class App {
     static Scanner input = new Scanner(System.in);
     static ArrayList<Transaction> transactions = getTransactions();
     static LocalDateTime localDateTime = LocalDateTime.now();
-    static Transaction transaction = new Transaction();
 
     public static void main(String[] args) {
         loadTransactions();
 
         runHomeScreen();
-
     }
 
     private static void displaySearchByVendor() {
@@ -135,6 +133,7 @@ public class App {
 
     private static void loadTransactions(){
         try {
+            Transaction transaction;
             String line;
             BufferedReader bufferedReader = new BufferedReader(new FileReader("transactions.csv"));
             bufferedReader.readLine();
@@ -164,14 +163,14 @@ public class App {
 
         double paymentAmount = promptForDouble("Amount: ");
         while(paymentAmount <= 0){
-            System.out.println("Deposit amount can't be less than or equal to 0.");
+            System.out.println("Payment amount can't be less than or equal to 0.");
             paymentAmount = promptForDouble("Amount: ");
         }
 
         LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-        transaction = new Transaction(dateStamp, timeStamp, paymentDescription, paymentVendor, -Math.abs(paymentAmount));
+        Transaction transaction = new Transaction(dateStamp, timeStamp, paymentDescription, paymentVendor, -paymentAmount); //-Math.abs(paymentAmount
 
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
@@ -205,7 +204,7 @@ public class App {
         LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-        transaction = new Transaction(dateStamp, timeStamp, depositDescription, depositVendor, depositAmount);
+        Transaction transaction = new Transaction(dateStamp, timeStamp, depositDescription, depositVendor, depositAmount);
 
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
@@ -237,16 +236,11 @@ public class App {
     private static Double promptForDouble(String amount){
         while (true) {
             System.out.print(amount);
-            //double answer = input.nextDouble();
-
-                try {
-                    return Double.parseDouble(input.nextLine().trim());
-                } catch (NumberFormatException e) {
-                    System.out.println("Please enter a proper amount.");
-                }
-//            }
-
-
+            try {
+                return Double.parseDouble(input.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a proper amount.");
+            }
         }
     }
 
@@ -272,7 +266,7 @@ public class App {
                 case "3"-> displayYearToDate();
                 case "4"-> displayPreviousYear();
                 case "5"-> displaySearchByVendor();
-                case "0"-> System.out.println("Returning to ledger..");//System.out.println("Going To Home Screen...");
+                case "0"-> System.out.println("Returning to ledger..");
                 default -> System.out.println("Invalid Input: Number entered is not valid, try Again.");
             }
         } while (!reportsScreenOption.equals("0"));
@@ -298,7 +292,7 @@ public class App {
                 case "d"-> displayDeposits();
                 case "p"-> displayPayments();
                 case "r"-> runReportsScreen();
-                case "h"-> System.out.println("Returning To Home Screen..");//System.out.println("Going To Home Screen...");
+                case "h"-> System.out.println("Returning To Home Screen..");
                 default -> System.out.println("Invalid Input: Letter entered is not valid.");
             }
         } while (!ledgerScreenOption.equals("h"));
