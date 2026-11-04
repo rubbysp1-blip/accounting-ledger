@@ -18,16 +18,19 @@ public class App {
     public static void main(String[] args) {
         loadTransactions();
 
-        runHomeScreen();
+        //runHomeScreen();
+
+        displayYearToDate();
+
 
     }
 
     private static void displaySearchByVendor() {
         boolean vendorTransaction = false;
 
-        System.out.print("Enter vendor: ");
-        String searchVendor = input.nextLine().toLowerCase();
-        vendorTransaction = filterSearchByVendor(searchVendor, vendorTransaction);
+        String searchVendor = promptForString("\nEnter Vendor: ");
+
+        vendorTransaction = filterSearchByVendor(searchVendor.toLowerCase(), vendorTransaction);
         if(!vendorTransaction){
             System.out.println("No transactions were found.");
         }
@@ -48,21 +51,19 @@ public class App {
     }
 
     private static void displayPreviousYear() {
-        int year = Integer.parseInt(String.valueOf(localDateTime.getYear())) - 1;
         boolean transactionMade = false;
+        transactionMade = filterPreviousYear(transactionMade);
 
-        transactionMade = filterPreviousYear(year, transactionMade);
         if(!transactionMade){
             System.out.println("No transactions were found.");
         }
         pressEnterToContinue();
     }
 
-    private static boolean filterPreviousYear(int year, boolean transactionMade) {
+    private static boolean filterPreviousYear(boolean transactionMade) {
         for(Transaction transaction : transactions){
             if(transaction != null){
-                String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
-                if(Integer.parseInt(tokens[0]) == year){
+                if(transaction.getDate().getYear() == LocalDate.now().minusYears(1).getYear()){
                     System.out.println(transaction.toString());
                     transactionMade = true;
                 }
@@ -72,23 +73,28 @@ public class App {
     }
 
     private static void displayYearToDate() {
-        boolean beforeTodayDate;
+        //boolean beforeTodayDate;
         boolean transactionMade = false;
-        String year = String.valueOf(localDateTime.getYear());
+        //String year = String.valueOf(localDateTime.getYear());year,
 
-        transactionMade = filterYearToDate(year, transactionMade);
+        transactionMade = filterYearToDate(transactionMade);
         if(!transactionMade){
             System.out.println("No transactions were found.");
         }
         pressEnterToContinue();
     }
 
-    private static boolean filterYearToDate(String year, boolean transactionMade) {
+    private static boolean filterYearToDate(boolean transactionMade) {
         boolean beforeTodayDate;
+        boolean currentYear;
         for(Transaction transaction : transactions){
             if(transaction != null){
                 beforeTodayDate = transaction.getDate().isAfter(ChronoLocalDate.from(localDateTime));
-                if(transaction.getDate().toString().contains(year) && !beforeTodayDate){
+                currentYear = transaction.getDate().getYear() == localDateTime.getYear();
+//                if(transaction.getDate().toString().contains(year) && !beforeTodayDate){
+//
+//                }
+                if(currentYear && !beforeTodayDate){
                     System.out.println(transaction.toString());
                     transactionMade = true;
                 }
@@ -309,7 +315,7 @@ public class App {
                 case "4"-> displayPreviousYear();
                 case "5"-> displaySearchByVendor();
                 case "0"-> System.out.println("Returning to ledger..");
-                default -> System.out.println("Invalid Input: Number entered is not valid, try Again.");
+                default -> System.out.println("\nInvalid Input: Number entered is not valid, try Again.");
             }
         } while (!reportsScreenOption.equals("0"));
     }
@@ -335,7 +341,7 @@ public class App {
                 case "p"-> displayPayments();
                 case "r"-> runReportsScreen();
                 case "h"-> System.out.println("Returning To Home Screen..");
-                default -> System.out.println("Invalid Input: Letter entered is not valid.");
+                default -> System.out.println("\nInvalid Input: Letter entered is not valid.");
             }
         } while (!ledgerScreenOption.equals("h"));
     }
@@ -359,7 +365,7 @@ public class App {
                 case "p"-> makePayment();
                 case "l"-> runLedgerScreen();
                 case "x"-> System.out.println("Goodbye!");
-                default -> System.out.println("Invalid Input: Letter entered is not valid, try again.");
+                default -> System.out.println("\nInvalid Input: Letter entered is not valid, try again.");
             }
         } while (!homeScreenOption.equals("x"));
     }
