@@ -19,11 +19,28 @@ public class App {
     public static void main(String[] args) {
         loadTransactions();
 
-        //runHomeScreen();
+        runHomeScreen();
 
+    }
 
+    private static void displaySearchByVendor() {
+        boolean vendorTransaction = false;
 
-
+        System.out.print("Enter vendor: ");
+        String searchVendor = input.nextLine().toLowerCase();
+        for(Transaction transaction : transactions){
+            if(transaction != null){
+                String vendor = transaction.getVendor().toLowerCase();
+                if(vendor.contains(searchVendor)){
+                    System.out.println(transaction.toString());
+                    vendorTransaction = true;
+                }
+            }
+        }
+        if(!vendorTransaction){
+            System.out.println("No transactions were found.");
+        }
+        pressEnterToContinue();
     }
 
     private static void displayPreviousYear() {
@@ -254,13 +271,12 @@ public class App {
                 case "2"-> displayPreviousMonth();
                 case "3"-> displayYearToDate();
                 case "4"-> displayPreviousYear();
-                case "5"-> System.out.println("5");
+                case "5"-> displaySearchByVendor();
                 case "0"-> System.out.println("Returning to ledger..");//System.out.println("Going To Home Screen...");
                 default -> System.out.println("Invalid Input: Number entered is not valid, try Again.");
             }
         } while (!reportsScreenOption.equals("0"));
     }
-
 
     private static void runLedgerScreen() {
         String ledgerScreenOption;
