@@ -20,7 +20,7 @@ public class App {
 
         //runHomeScreen();
 
-        displayYearToDate();
+        displayPreviousMonth();
 
 
     }
@@ -73,9 +73,7 @@ public class App {
     }
 
     private static void displayYearToDate() {
-        //boolean beforeTodayDate;
         boolean transactionMade = false;
-        //String year = String.valueOf(localDateTime.getYear());year,
 
         transactionMade = filterYearToDate(transactionMade);
         if(!transactionMade){
@@ -91,9 +89,6 @@ public class App {
             if(transaction != null){
                 beforeTodayDate = transaction.getDate().isAfter(ChronoLocalDate.from(localDateTime));
                 currentYear = transaction.getDate().getYear() == localDateTime.getYear();
-//                if(transaction.getDate().toString().contains(year) && !beforeTodayDate){
-//
-//                }
                 if(currentYear && !beforeTodayDate){
                     System.out.println(transaction.toString());
                     transactionMade = true;
@@ -105,21 +100,22 @@ public class App {
 
     private static void displayPreviousMonth() {
         boolean transactionMade = false;
-        String year = String.valueOf(localDateTime.getYear());
-        int month = Integer.parseInt(String.valueOf(localDateTime.getMonthValue())) - 1;
+        transactionMade = filterPreviousMonth(transactionMade);
 
-        transactionMade = filterPreviousMonth(year, month, transactionMade);
         if(!transactionMade){
             System.out.println("No transactions were found.");
         }
         pressEnterToContinue();
     }
 
-    private static boolean filterPreviousMonth(String year, int month, boolean transactionMade) {
+    private static boolean filterPreviousMonth(boolean transactionMade) {
+        boolean currentYear;
+        int previousMonth;
         for(Transaction transaction : transactions){
             if(transaction != null){
-                String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
-                if(tokens[0].equals(year) && Integer.parseInt(tokens[1]) == month){
+                currentYear = transaction.getDate().getYear() == localDateTime.getYear();
+                previousMonth = LocalDate.now().minusMonths(1).getMonthValue();
+                if( currentYear && transaction.getDate().getMonthValue() == previousMonth){
                     System.out.println(transaction.toString());
                     transactionMade = true;
                 }
