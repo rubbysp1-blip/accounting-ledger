@@ -249,9 +249,9 @@ public class App {
         do {
             System.out.print("""
                         
-                        ==================
+                        ======================
                         \tReports Screen
-                        ==================
+                        ======================
                         1) Month To Date
                         2) Previous Month
                         3) Year To Date
@@ -277,9 +277,9 @@ public class App {
         do {
             System.out.print("""
                     
-                    ==================
+                    ======================
                     \tLedger Screen
-                    ==================
+                    ======================
                     A) All
                     D) Deposits
                     P) Payments
