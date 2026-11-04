@@ -62,6 +62,7 @@ public class App {
 
     private static void displayYearToDate() {
         boolean beforeTodayDate;
+        boolean transactionMade = false;
         String year = String.valueOf(localDateTime.getYear());
 
         for(Transaction transaction : transactions){
@@ -69,13 +70,18 @@ public class App {
                 beforeTodayDate = transaction.getDate().isAfter(ChronoLocalDate.from(localDateTime));
                 if(transaction.getDate().toString().contains(year) && !beforeTodayDate){
                     System.out.println(transaction.toString());
+                    transactionMade = true;
                 }
             }
+        }
+        if(!transactionMade){
+            System.out.println("No transactions were found.");
         }
         pressEnterToContinue();
     }
 
     private static void displayPreviousMonth() {
+        boolean transactionMade = false;
         String year = String.valueOf(localDateTime.getYear());
         int month = Integer.parseInt(String.valueOf(localDateTime.getMonthValue())) - 1;
 
@@ -84,13 +90,18 @@ public class App {
                 String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
                 if(tokens[0].equals(year) && Integer.parseInt(tokens[1]) == month){
                     System.out.println(transaction.toString());
+                    transactionMade = true;
                 }
             }
+        }
+        if(!transactionMade){
+            System.out.println("No transactions were found.");
         }
         pressEnterToContinue();
     }
 
     private static void displayMonthToDate() {
+        boolean transactionMade = false;
         String year = String.valueOf(localDateTime.getYear());
         String month = String.valueOf(localDateTime.getMonthValue());
         int day = Integer.parseInt(String.valueOf(localDateTime.getDayOfMonth()));
@@ -100,8 +111,12 @@ public class App {
                 String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
                 if(tokens[0].equals(year) && tokens[1].equals(month) && Integer.parseInt(tokens[2]) <= day){
                     System.out.println(transaction.toString());
+                    transactionMade = true;
                 }
             }
+        }
+        if(!transactionMade){
+            System.out.println("No transactions were found.");
         }
         pressEnterToContinue();
     }
