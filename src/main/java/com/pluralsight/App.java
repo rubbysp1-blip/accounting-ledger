@@ -19,6 +19,7 @@ public class App {
         loadTransactions();
 
         runHomeScreen();
+
     }
 
     private static void displaySearchByVendor() {
@@ -26,6 +27,14 @@ public class App {
 
         System.out.print("Enter vendor: ");
         String searchVendor = input.nextLine().toLowerCase();
+        vendorTransaction = filterSearchByVendor(searchVendor, vendorTransaction);
+        if(!vendorTransaction){
+            System.out.println("No transactions were found.");
+        }
+        pressEnterToContinue();
+    }
+
+    private static boolean filterSearchByVendor(String searchVendor, boolean vendorTransaction) {
         for(Transaction transaction : transactions){
             if(transaction != null){
                 String vendor = transaction.getVendor().toLowerCase();
@@ -35,16 +44,21 @@ public class App {
                 }
             }
         }
-        if(!vendorTransaction){
-            System.out.println("No transactions were found.");
-        }
-        pressEnterToContinue();
+        return vendorTransaction;
     }
 
     private static void displayPreviousYear() {
         int year = Integer.parseInt(String.valueOf(localDateTime.getYear())) - 1;
         boolean transactionMade = false;
 
+        transactionMade = filterPreviousYear(year, transactionMade);
+        if(!transactionMade){
+            System.out.println("No transactions were found.");
+        }
+        pressEnterToContinue();
+    }
+
+    private static boolean filterPreviousYear(int year, boolean transactionMade) {
         for(Transaction transaction : transactions){
             if(transaction != null){
                 String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
@@ -54,10 +68,7 @@ public class App {
                 }
             }
         }
-        if(!transactionMade){
-            System.out.println("No transactions were found.");
-        }
-        pressEnterToContinue();
+        return transactionMade;
     }
 
     private static void displayYearToDate() {
@@ -65,6 +76,15 @@ public class App {
         boolean transactionMade = false;
         String year = String.valueOf(localDateTime.getYear());
 
+        transactionMade = filterYearToDate(year, transactionMade);
+        if(!transactionMade){
+            System.out.println("No transactions were found.");
+        }
+        pressEnterToContinue();
+    }
+
+    private static boolean filterYearToDate(String year, boolean transactionMade) {
+        boolean beforeTodayDate;
         for(Transaction transaction : transactions){
             if(transaction != null){
                 beforeTodayDate = transaction.getDate().isAfter(ChronoLocalDate.from(localDateTime));
@@ -74,10 +94,7 @@ public class App {
                 }
             }
         }
-        if(!transactionMade){
-            System.out.println("No transactions were found.");
-        }
-        pressEnterToContinue();
+        return transactionMade;
     }
 
     private static void displayPreviousMonth() {
@@ -85,6 +102,14 @@ public class App {
         String year = String.valueOf(localDateTime.getYear());
         int month = Integer.parseInt(String.valueOf(localDateTime.getMonthValue())) - 1;
 
+        transactionMade = filterPreviousMonth(year, month, transactionMade);
+        if(!transactionMade){
+            System.out.println("No transactions were found.");
+        }
+        pressEnterToContinue();
+    }
+
+    private static boolean filterPreviousMonth(String year, int month, boolean transactionMade) {
         for(Transaction transaction : transactions){
             if(transaction != null){
                 String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
@@ -94,10 +119,7 @@ public class App {
                 }
             }
         }
-        if(!transactionMade){
-            System.out.println("No transactions were found.");
-        }
-        pressEnterToContinue();
+        return transactionMade;
     }
 
     private static void displayMonthToDate() {
@@ -106,6 +128,14 @@ public class App {
         String month = String.valueOf(localDateTime.getMonthValue());
         int day = Integer.parseInt(String.valueOf(localDateTime.getDayOfMonth()));
 
+        transactionMade = filterMonthToDate(year, month, day, transactionMade);
+        if(!transactionMade){
+            System.out.println("No transactions were found.");
+        }
+        pressEnterToContinue();
+    }
+
+    private static boolean filterMonthToDate(String year, String month, int day, boolean transactionMade) {
         for(Transaction transaction : transactions){
             if(transaction != null){
                 String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
@@ -115,10 +145,7 @@ public class App {
                 }
             }
         }
-        if(!transactionMade){
-            System.out.println("No transactions were found.");
-        }
-        pressEnterToContinue();
+        return transactionMade;
     }
 
     private static void displayDeposits() {
