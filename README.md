@@ -27,7 +27,7 @@ if the user wants reports it will be displayed to them upon request.
 
 ![The home screen](images/home-screen.png)
 
-![Another screen](images/[another-screen].png)
+![The reports screen](images/reports-screen.png)
 
 ## Interesting code
 
