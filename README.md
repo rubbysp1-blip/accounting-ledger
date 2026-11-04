@@ -31,10 +31,20 @@ if the user wants reports it will be displayed to them upon request.
 
 ## Interesting code
 
-[One piece of code you're proud of, and a sentence about why.]
+This interesting to me because reduces code and make this method for 
+an action method
 
 ```java
-[your code here]
+for(Transaction transaction : transactions){
+        if(transaction != null){
+String vendor = transaction.getVendor().toLowerCase();
+                if(vendor.contains(searchVendor)){
+        System.out.println(transaction.toString());
+vendorTransaction = true;
+        }
+        }
+        }
+        return vendorTransaction;
 ```
 
 ## Author
