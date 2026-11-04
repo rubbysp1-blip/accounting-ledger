@@ -19,7 +19,6 @@ public class App {
         loadTransactions();
 
         runHomeScreen();
-
     }
 
     private static void displaySearchByVendor() {
