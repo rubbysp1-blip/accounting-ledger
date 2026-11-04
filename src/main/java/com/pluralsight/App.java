@@ -24,7 +24,10 @@ public class App {
 
     private static void displaySearchByVendor() {
         boolean vendorTransaction = false;
-
+        System.out.println("""
+                
+                \t\tReport
+                --------------------------""");
         String searchVendor = promptForString("\nEnter Vendor: ");
 
         vendorTransaction = filterSearchByVendor(searchVendor.toLowerCase(), vendorTransaction);
@@ -49,6 +52,10 @@ public class App {
 
     private static void displayPreviousYear() {
         boolean transactionMade = false;
+        System.out.println("""
+                
+                \t\tReport
+                --------------------------""");
         transactionMade = filterPreviousYear(transactionMade);
 
         if(!transactionMade){
@@ -71,7 +78,10 @@ public class App {
 
     private static void displayYearToDate() {
         boolean transactionMade = false;
-
+        System.out.println("""
+                
+                \t\tReport
+                --------------------------""");
         transactionMade = filterYearToDate(transactionMade);
         if(!transactionMade){
             System.out.println("No transactions were found.");
@@ -97,6 +107,10 @@ public class App {
 
     private static void displayPreviousMonth() {
         boolean transactionMade = false;
+        System.out.println("""
+                
+                \t\tReport
+                --------------------------""");
         transactionMade = filterPreviousMonth(transactionMade);
 
         if(!transactionMade){
@@ -123,6 +137,10 @@ public class App {
 
     private static void displayMonthToDate() {
         boolean transactionMade = false;
+        System.out.println("""
+                
+                \t\tReport
+                --------------------------""");
         transactionMade = filterMonthToDate(transactionMade);
 
         if(!transactionMade){
@@ -150,24 +168,36 @@ public class App {
     }
 
     private static void displayDeposits() {
+        System.out.println("""
+                
+                \t\tDeposits
+                --------------------------""");
         for(Transaction transaction : transactions){
             if(transaction != null && transaction.getAmount() > 0){
-                System.out.print(transaction.toCSV());
+                System.out.println(transaction.toCSV());
             }
         }
         pressEnterToContinue();
     }
 
     private static void displayPayments() {
+        System.out.println("""
+                
+                \t\tPayments
+                --------------------------""");
         for(Transaction transaction : transactions){
             if(transaction != null && transaction.getAmount() < 0){
-                System.out.print(transaction.toCSV());
+                System.out.println(transaction.toCSV());
             }
         }
         pressEnterToContinue();
     }
 
     private static void displayAllEntries() {
+        System.out.println("""
+                
+                \t\tAll Entries
+                --------------------------""");
         for(Transaction transaction : transactions){
             System.out.println(transaction.toCSV());
         }

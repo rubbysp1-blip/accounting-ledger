@@ -10,9 +10,6 @@ public class Transaction {
     private String vendor;
     private double amount;
 
-    public Transaction() {
-    }
-
     public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {
         this.date = date;
         this.time = time;
@@ -72,6 +69,6 @@ public class Transaction {
 
     public String toCSV() {
         return date + "|" + time + "|" + description + "|" + vendor + "|" +
-                String.format("%.2f", amount) + "\n";
+                String.format("%.2f", amount);
     }
 }
