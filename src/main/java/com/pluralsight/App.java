@@ -20,7 +20,6 @@ public class App {
 
         runHomeScreen();
 
-
     }
 
     private static void displaySearchByVendor() {
@@ -124,11 +123,8 @@ public class App {
 
     private static void displayMonthToDate() {
         boolean transactionMade = false;
-//        String year = String.valueOf(localDateTime.getYear());
-//        String month = String.valueOf(localDateTime.getMonthValue());
-//        int day = Integer.parseInt(String.valueOf(localDateTime.getDayOfMonth()));year, month, day, String year, String month, int day,
-
         transactionMade = filterMonthToDate(transactionMade);
+
         if(!transactionMade){
             System.out.println("No transactions were found.");
         }
@@ -141,11 +137,6 @@ public class App {
         boolean currentDay;
         for(Transaction transaction : transactions){
             if(transaction != null){
-                //String[] tokens = transaction.getDate().toString().split(Pattern.quote("-"));
-//                if(tokens[0].equals(year) && tokens[1].equals(month) && Integer.parseInt(tokens[2]) <= day){
-//                    System.out.println(transaction.toString());
-//                    transactionMade = true;
-//                }
                 currentYear = transaction.getDate().getYear() == localDateTime.getYear();
                 previousMonth = LocalDate.now().getMonthValue();
                 currentDay = transaction.getDate().getDayOfMonth() <= localDateTime.getDayOfMonth();
