@@ -22,7 +22,7 @@ public class App {
         input.close();
     }
 
-    private static void displaySearchByVendor() {
+    private static void printSearchByVendor() {
         boolean vendorTransaction = false;
         String searchVendor = promptForString("\nEnter Vendor: ");
         System.out.print("""
@@ -30,14 +30,14 @@ public class App {
                 \t\tSearch By Vendor Report
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
-        vendorTransaction = filterSearchByVendor(searchVendor.toLowerCase(), vendorTransaction);
+        vendorTransaction = displaySearchByVendor(searchVendor.toLowerCase(), vendorTransaction);
         if(!vendorTransaction){
             System.out.println("No transactions were found.");
         }
         pressEnterToContinue();
     }
 
-    private static boolean filterSearchByVendor(String searchVendor, boolean vendorTransaction) {
+    private static boolean displaySearchByVendor(String searchVendor, boolean vendorTransaction) {
         for(Transaction transaction : transactions){
             if(transaction != null){
                 String vendor = transaction.getVendor().toLowerCase();
@@ -50,14 +50,14 @@ public class App {
         return vendorTransaction;
     }
 
-    private static void displayPreviousYear() {
+    private static void printPreviousYear() {
         boolean transactionMade = false;
         System.out.println("""
                 
                 \t\tPrevious Year Report
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
-        transactionMade = filterPreviousYear(transactionMade);
+        transactionMade = displayPreviousYear(transactionMade);
 
         if(!transactionMade){
             System.out.println("No transactions were found.");
@@ -65,7 +65,7 @@ public class App {
         pressEnterToContinue();
     }
 
-    private static boolean filterPreviousYear(boolean transactionMade) {
+    private static boolean displayPreviousYear(boolean transactionMade) {
         for(Transaction transaction : transactions){
             if(transaction != null){
                 if(transaction.getDate().getYear() == LocalDate.now().minusYears(1).getYear()){
@@ -77,21 +77,21 @@ public class App {
         return transactionMade;
     }
 
-    private static void displayYearToDate() {
+    private static void printYearToDate() {
         boolean transactionMade = false;
         System.out.println("""
                 
                 \t\tYear To Date Report
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
-        transactionMade = filterYearToDate(transactionMade);
+        transactionMade = displayYearToDate(transactionMade);
         if(!transactionMade){
             System.out.println("No transactions were found.");
         }
         pressEnterToContinue();
     }
 
-    private static boolean filterYearToDate(boolean transactionMade) {
+    private static boolean displayYearToDate(boolean transactionMade) {
         boolean beforeTodayDate;
         boolean currentYear;
         for(Transaction transaction : transactions){
@@ -107,14 +107,14 @@ public class App {
         return transactionMade;
     }
 
-    private static void displayPreviousMonth() {
+    private static void printPreviousMonth() {
         boolean transactionMade = false;
         System.out.println("""
                 
                 \t\tPrevious Month Report
                --------------------------------------------------------------------------------""");
         displayTableHeader();
-        transactionMade = filterPreviousMonth(transactionMade);
+        transactionMade = displayPreviousMonth(transactionMade);
 
         if(!transactionMade){
             System.out.println("No transactions were found.");
@@ -122,7 +122,7 @@ public class App {
         pressEnterToContinue();
     }
 
-    private static boolean filterPreviousMonth(boolean transactionMade) {
+    private static boolean displayPreviousMonth(boolean transactionMade) {
         boolean currentYear;
         int previousMonth;
         for(Transaction transaction : transactions){
@@ -138,14 +138,14 @@ public class App {
         return transactionMade;
     }
 
-    private static void displayMonthToDate() {
+    private static void printMonthToDate() {
         boolean transactionMade = false;
         System.out.println("""
                 
                 \t\tMonth To Date Report
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
-        transactionMade = filterMonthToDate(transactionMade);
+        transactionMade = displayMonthToDate(transactionMade);
 
         if(!transactionMade){
             System.out.println("No transactions were found.");
@@ -153,16 +153,16 @@ public class App {
         pressEnterToContinue();
     }
 
-    private static boolean filterMonthToDate(boolean transactionMade) {
+    private static boolean displayMonthToDate(boolean transactionMade) {
         boolean currentYear;
-        int previousMonth;
+        int currentMonth;
         boolean currentDay;
         for(Transaction transaction : transactions){
             if(transaction != null){
                 currentYear = transaction.getDate().getYear() == localDateTime.getYear();
-                previousMonth = LocalDate.now().getMonthValue();
+                currentMonth = LocalDate.now().getMonthValue();
                 currentDay = transaction.getDate().getDayOfMonth() <= localDateTime.getDayOfMonth();
-                if( currentYear && transaction.getDate().getMonthValue() == previousMonth && currentDay){
+                if( currentYear && transaction.getDate().getMonthValue() == currentMonth && currentDay){
                     System.out.println(transaction.toTable());
                     transactionMade = true;
                 }
@@ -245,10 +245,10 @@ public class App {
             paymentAmount = promptForDouble("Amount: ");
         }
 
-        filterAddPayment(paymentDescription, paymentVendor, paymentAmount);
+        saveAddPayment(paymentDescription, paymentVendor, paymentAmount);
     }
 
-    private static void filterAddPayment(String paymentDescription, String paymentVendor, double paymentAmount) {
+    private static void saveAddPayment(String paymentDescription, String paymentVendor, double paymentAmount) {
         LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
@@ -281,11 +281,11 @@ public class App {
             depositAmount = promptForDouble("Amount: ");
         }
 
-        filterAddDeposit(depositDescription, depositVendor, depositAmount);
+        saveDeposit(depositDescription, depositVendor, depositAmount);
 
     }
 
-    private static void filterAddDeposit(String depositDescription, String depositVendor, double depositAmount) {
+    private static void saveDeposit(String depositDescription, String depositVendor, double depositAmount) {
         LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
@@ -345,11 +345,11 @@ public class App {
             reportsScreenOption = input.nextLine().trim();
 
             switch (reportsScreenOption){
-                case "1"-> displayMonthToDate();
-                case "2"-> displayPreviousMonth();
-                case "3"-> displayYearToDate();
-                case "4"-> displayPreviousYear();
-                case "5"-> displaySearchByVendor();
+                case "1"-> printMonthToDate();
+                case "2"-> printPreviousMonth();
+                case "3"-> printYearToDate();
+                case "4"-> printPreviousYear();
+                case "5"-> printSearchByVendor();
                 case "0"-> System.out.println("Returning to ledger..");
                 default -> System.out.println("\nInvalid Input: Number entered is not valid, try Again.");
             }
