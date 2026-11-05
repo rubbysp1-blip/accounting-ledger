@@ -27,7 +27,7 @@ public class App {
         String searchVendor = promptForString("\nEnter Vendor: ");
         System.out.print("""
                 
-                \t\tReport
+                \t\tSearch By Vendor Report
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
         vendorTransaction = filterSearchByVendor(searchVendor.toLowerCase(), vendorTransaction);
@@ -54,7 +54,7 @@ public class App {
         boolean transactionMade = false;
         System.out.println("""
                 
-                \t\tReport
+                \t\tPrevious Year Report
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
         transactionMade = filterPreviousYear(transactionMade);
@@ -81,7 +81,7 @@ public class App {
         boolean transactionMade = false;
         System.out.println("""
                 
-                \t\tReport
+                \t\tYear To Date Report
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
         transactionMade = filterYearToDate(transactionMade);
@@ -111,7 +111,7 @@ public class App {
         boolean transactionMade = false;
         System.out.println("""
                 
-                \t\tReport
+                \t\tPrevious Month Report
                --------------------------------------------------------------------------------""");
         displayTableHeader();
         transactionMade = filterPreviousMonth(transactionMade);
@@ -142,7 +142,7 @@ public class App {
         boolean transactionMade = false;
         System.out.println("""
                 
-                \t\tReport
+                \t\tMonth To Date Report
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
         transactionMade = filterMonthToDate(transactionMade);
