@@ -254,16 +254,7 @@ public class App {
 
         Transaction transaction = new Transaction(dateStamp, timeStamp, paymentDescription, paymentVendor, -paymentAmount);
 
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
-            bufferedWriter.write(transaction.toCSV());
-            bufferedWriter.close();
-            System.out.print("\nPayment has been recorded!");
-            pressEnterToContinue();
-
-        } catch (IOException e) {
-            System.out.println("File not found.");;
-        }
+        saveTransaction(transaction);
     }
 
     private static void addDeposit() {
@@ -291,6 +282,10 @@ public class App {
 
         Transaction transaction = new Transaction(dateStamp, timeStamp, depositDescription, depositVendor, depositAmount);
 
+        saveTransaction(transaction);
+    }
+
+    private static void saveTransaction(Transaction transaction) {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
             bufferedWriter.write(transaction.toCSV());
