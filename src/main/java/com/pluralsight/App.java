@@ -17,8 +17,8 @@ public class App {
 
     public static void main(String[] args) {
         loadTransactions();
-        printPreviousYear();
-        //runHomeScreen();
+
+        runHomeScreen();
         input.close();
     }
 
@@ -49,18 +49,13 @@ public class App {
     }
 
     private static void printPreviousYear() {
-        //boolean transactionMade = false;
         System.out.println("""
                 
                 \t\tPrevious Year Report
                 --------------------------------------------------------------------------------""");
-        displayTableHeader();
-        //transactionMade = displayPreviousYear(transactionMade);
+
         ArrayList<Transaction> previousYearTransaction = displayPreviousYear();
         displayTransactions(previousYearTransaction);
-//        if(!transactionMade){
-//            System.out.println("No transactions were found.");
-//        }
 
         pressEnterToContinue();
     }
