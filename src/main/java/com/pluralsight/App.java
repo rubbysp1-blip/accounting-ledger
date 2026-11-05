@@ -24,12 +24,12 @@ public class App {
 
     private static void displaySearchByVendor() {
         boolean vendorTransaction = false;
-        System.out.println("""
+        String searchVendor = promptForString("\nEnter Vendor: ");
+        System.out.print("""
                 
                 \t\tReport
-                --------------------------""");
-        String searchVendor = promptForString("\nEnter Vendor: ");
-
+                --------------------------------------------------------------------------------""");
+        displayTableHeader();
         vendorTransaction = filterSearchByVendor(searchVendor.toLowerCase(), vendorTransaction);
         if(!vendorTransaction){
             System.out.println("No transactions were found.");
@@ -42,7 +42,7 @@ public class App {
             if(transaction != null){
                 String vendor = transaction.getVendor().toLowerCase();
                 if(vendor.contains(searchVendor)){
-                    System.out.println(transaction.toString());
+                    System.out.println(transaction.toTable());
                     vendorTransaction = true;
                 }
             }
@@ -55,7 +55,8 @@ public class App {
         System.out.println("""
                 
                 \t\tReport
-                --------------------------""");
+                --------------------------------------------------------------------------------""");
+        displayTableHeader();
         transactionMade = filterPreviousYear(transactionMade);
 
         if(!transactionMade){
@@ -68,7 +69,7 @@ public class App {
         for(Transaction transaction : transactions){
             if(transaction != null){
                 if(transaction.getDate().getYear() == LocalDate.now().minusYears(1).getYear()){
-                    System.out.println(transaction.toString());
+                    System.out.println(transaction.toTable());
                     transactionMade = true;
                 }
             }
@@ -81,7 +82,8 @@ public class App {
         System.out.println("""
                 
                 \t\tReport
-                --------------------------""");
+                --------------------------------------------------------------------------------""");
+        displayTableHeader();
         transactionMade = filterYearToDate(transactionMade);
         if(!transactionMade){
             System.out.println("No transactions were found.");
@@ -97,7 +99,7 @@ public class App {
                 beforeTodayDate = transaction.getDate().isAfter(ChronoLocalDate.from(localDateTime));
                 currentYear = transaction.getDate().getYear() == localDateTime.getYear();
                 if(currentYear && !beforeTodayDate){
-                    System.out.println(transaction.toString());
+                    System.out.println(transaction.toTable());
                     transactionMade = true;
                 }
             }
@@ -110,7 +112,8 @@ public class App {
         System.out.println("""
                 
                 \t\tReport
-                --------------------------""");
+               --------------------------------------------------------------------------------""");
+        displayTableHeader();
         transactionMade = filterPreviousMonth(transactionMade);
 
         if(!transactionMade){
@@ -127,7 +130,7 @@ public class App {
                 currentYear = transaction.getDate().getYear() == localDateTime.getYear();
                 previousMonth = LocalDate.now().minusMonths(1).getMonthValue();
                 if( currentYear && transaction.getDate().getMonthValue() == previousMonth){
-                    System.out.println(transaction.toString());
+                    System.out.println(transaction.toTable());
                     transactionMade = true;
                 }
             }
@@ -140,7 +143,8 @@ public class App {
         System.out.println("""
                 
                 \t\tReport
-                --------------------------""");
+                --------------------------------------------------------------------------------""");
+        displayTableHeader();
         transactionMade = filterMonthToDate(transactionMade);
 
         if(!transactionMade){
@@ -159,7 +163,7 @@ public class App {
                 previousMonth = LocalDate.now().getMonthValue();
                 currentDay = transaction.getDate().getDayOfMonth() <= localDateTime.getDayOfMonth();
                 if( currentYear && transaction.getDate().getMonthValue() == previousMonth && currentDay){
-                    System.out.println(transaction.toString());
+                    System.out.println(transaction.toTable());
                     transactionMade = true;
                 }
             }
@@ -171,10 +175,11 @@ public class App {
         System.out.println("""
                 
                 \t\tDeposits
-                --------------------------""");
+                --------------------------------------------------------------------------------""");
+        displayTableHeader();
         for(Transaction transaction : transactions){
             if(transaction != null && transaction.getAmount() > 0){
-                System.out.println(transaction.toCSV());
+                System.out.println(transaction.toTable());
             }
         }
         pressEnterToContinue();
@@ -184,10 +189,11 @@ public class App {
         System.out.println("""
                 
                 \t\tPayments
-                --------------------------""");
+                --------------------------------------------------------------------------------""");
+        displayTableHeader();
         for(Transaction transaction : transactions){
             if(transaction != null && transaction.getAmount() < 0){
-                System.out.println(transaction.toCSV());
+                System.out.println(transaction.toTable());
             }
         }
         pressEnterToContinue();
@@ -195,11 +201,12 @@ public class App {
 
     private static void displayAllEntries() {
         System.out.println("""
-                
+
                 \t\tAll Entries
-                --------------------------""");
+                --------------------------------------------------------------------------------""");
+        displayTableHeader();
         for(Transaction transaction : transactions){
-            System.out.println(transaction.toCSV());
+            System.out.println(transaction.toTable());
         }
         pressEnterToContinue();
     }
@@ -401,6 +408,13 @@ public class App {
 
     public static ArrayList<Transaction> getTransactions(){
         return new ArrayList<Transaction>();
+    }
+
+    private static void displayTableHeader(){
+        System.out.printf("\n%-12s %-10s %-25s %-20s %10s%n",
+                "DATE", "TIME", "DESCRIPTION", "VENDOR", "AMOUNT");
+
+        System.out.println("--------------------------------------------------------------------------------");
     }
 
     private static void pressEnterToContinue() {

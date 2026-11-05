@@ -71,4 +71,13 @@ public class Transaction {
         return date + "|" + time + "|" + description + "|" + vendor + "|" +
                 String.format("%.2f", amount);
     }
+
+    public String toTable(){
+        return String.format("%-12s %-10s %-25s %-20s $%.2f",
+                    date,
+                    time,
+                    description,
+                    vendor,
+                    amount);
+    }
 }
