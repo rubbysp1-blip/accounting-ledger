@@ -19,6 +19,7 @@ public class App {
         loadTransactions();
 
         runHomeScreen();
+        input.close();
     }
 
     private static void displaySearchByVendor() {
@@ -326,7 +327,7 @@ public class App {
             System.out.print("""
                         
                         ======================
-                        \tReports Screen
+                        \tReports
                         ======================
                         1) Month To Date
                         2) Previous Month
@@ -354,7 +355,7 @@ public class App {
             System.out.print("""
                     
                     ======================
-                    \tLedger Screen
+                    \tLedger
                     ======================
                     A) All
                     D) Deposits
@@ -380,7 +381,7 @@ public class App {
             System.out.print("""
                     
                     ==================
-                    \tHome Screen
+                    \tHome
                     ==================
                     D) Add Deposit
                     P) Make Payment
@@ -396,7 +397,6 @@ public class App {
                 default -> System.out.println("\nInvalid Input: Letter entered is not valid, try again.");
             }
         } while (!homeScreenOption.equals("x"));
-        input.close();
     }
 
     public static ArrayList<Transaction> getTransactions(){
