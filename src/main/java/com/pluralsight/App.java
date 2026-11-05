@@ -23,31 +23,29 @@ public class App {
     }
 
     private static void printSearchByVendor() {
-        boolean vendorTransaction = false;
+        //boolean vendorTransaction = false;
         String searchVendor = promptForString("\nEnter Vendor: ");
         System.out.print("""
                 
                 \t\tSearch By Vendor Report
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
-        vendorTransaction = displaySearchByVendor(searchVendor.toLowerCase(), vendorTransaction);
-        if(!vendorTransaction){
-            System.out.println("No transactions were found.");
-        }
+        ArrayList<Transaction> vendorTransaction = displaySearchByVendor(searchVendor.toLowerCase());
+        displayTransactions(vendorTransaction);
         pressEnterToContinue();
     }
 
-    private static boolean displaySearchByVendor(String searchVendor, boolean vendorTransaction) {
+    private static ArrayList<Transaction> displaySearchByVendor(String searchVendor) {
+        ArrayList<Transaction> vendorTransactions = new ArrayList<>();
         for(Transaction transaction : transactions){
             if(transaction != null){
                 String vendor = transaction.getVendor().toLowerCase();
                 if(vendor.contains(searchVendor)){
-                    System.out.println(transaction.toTable());
-                    vendorTransaction = true;
+                    vendorTransactions.add(transaction);
                 }
             }
         }
-        return vendorTransaction;
+        return vendorTransactions;
     }
 
     private static void printPreviousYear() {
@@ -59,11 +57,13 @@ public class App {
         displayTableHeader();
         transactionMade = displayPreviousYear(transactionMade);
 
+        displayTransactions();
         if(!transactionMade){
             System.out.println("No transactions were found.");
         }
         pressEnterToContinue();
     }
+
 
     private static boolean displayPreviousYear(boolean transactionMade) {
         for(Transaction transaction : transactions){
@@ -169,6 +169,17 @@ public class App {
             }
         }
         return transactionMade;
+    }
+
+    private static void displayTransactions(ArrayList<Transaction> transactions){
+        if(transactions.isEmpty()){
+            System.out.println("No transactions were found!");
+        }else{
+            displayTableHeader();
+            for(Transaction transaction : transactions){
+                System.out.println(transaction.toTable());
+            }
+        }
     }
 
     private static void displayDeposits() {
