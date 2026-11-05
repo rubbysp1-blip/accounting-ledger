@@ -17,8 +17,8 @@ public class App {
 
     public static void main(String[] args) {
         loadTransactions();
-
-        runHomeScreen();
+        printPreviousYear();
+        //runHomeScreen();
         input.close();
     }
 
@@ -49,33 +49,45 @@ public class App {
     }
 
     private static void printPreviousYear() {
-        boolean transactionMade = false;
+        //boolean transactionMade = false;
         System.out.println("""
                 
                 \t\tPrevious Year Report
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
-        transactionMade = displayPreviousYear(transactionMade);
+        //transactionMade = displayPreviousYear(transactionMade);
+        ArrayList<Transaction> previousYearTransaction = displayPreviousYear();
+        displayTransactions(previousYearTransaction);
+//        if(!transactionMade){
+//            System.out.println("No transactions were found.");
+//        }
 
-        displayTransactions();
-        if(!transactionMade){
-            System.out.println("No transactions were found.");
-        }
         pressEnterToContinue();
     }
 
-
-    private static boolean displayPreviousYear(boolean transactionMade) {
+    private static ArrayList<Transaction> displayPreviousYear(){
+        ArrayList<Transaction> previousYearTransactions = new ArrayList<> ();
         for(Transaction transaction : transactions){
             if(transaction != null){
                 if(transaction.getDate().getYear() == LocalDate.now().minusYears(1).getYear()){
-                    System.out.println(transaction.toTable());
-                    transactionMade = true;
+                    previousYearTransactions.add(transaction);
                 }
             }
         }
-        return transactionMade;
+        return previousYearTransactions;
     }
+
+//    private static boolean displayPreviousYear(boolean transactionMade) {
+//        for(Transaction transaction : transactions){
+//            if(transaction != null){
+//                if(transaction.getDate().getYear() == LocalDate.now().minusYears(1).getYear()){
+//                    System.out.println(transaction.toTable());
+//                    transactionMade = true;
+//                }
+//            }
+//        }
+//        return transactionMade;
+//    }
 
     private static void printYearToDate() {
         boolean transactionMade = false;
