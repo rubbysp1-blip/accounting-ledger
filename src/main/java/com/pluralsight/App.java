@@ -17,7 +17,7 @@ public class App {
 
     public static void main(String[] args) {
         loadTransactions();
-
+        
         runHomeScreen();
         input.close();
     }
@@ -29,7 +29,6 @@ public class App {
                 
                 \t\tSearch By Vendor Report
                 --------------------------------------------------------------------------------""");
-        displayTableHeader();
         ArrayList<Transaction> vendorTransaction = displaySearchByVendor(searchVendor.toLowerCase());
         displayTransactions(vendorTransaction);
         pressEnterToContinue();
@@ -54,13 +53,13 @@ public class App {
                 \t\tPrevious Year Report
                 --------------------------------------------------------------------------------""");
 
-        ArrayList<Transaction> previousYearTransaction = displayPreviousYear();
+        ArrayList<Transaction> previousYearTransaction = displayPreviousYearDate();
         displayTransactions(previousYearTransaction);
 
         pressEnterToContinue();
     }
 
-    private static ArrayList<Transaction> displayPreviousYear(){
+    private static ArrayList<Transaction> displayPreviousYearDate(){
         ArrayList<Transaction> previousYearTransactions = new ArrayList<> ();
         for(Transaction transaction : transactions){
             if(transaction != null){
@@ -72,33 +71,18 @@ public class App {
         return previousYearTransactions;
     }
 
-//    private static boolean displayPreviousYear(boolean transactionMade) {
-//        for(Transaction transaction : transactions){
-//            if(transaction != null){
-//                if(transaction.getDate().getYear() == LocalDate.now().minusYears(1).getYear()){
-//                    System.out.println(transaction.toTable());
-//                    transactionMade = true;
-//                }
-//            }
-//        }
-//        return transactionMade;
-//    }
-
     private static void printYearToDate() {
-        boolean transactionMade = false;
         System.out.println("""
                 
                 \t\tYear To Date Report
                 --------------------------------------------------------------------------------""");
-        displayTableHeader();
-        transactionMade = displayYearToDate(transactionMade);
-        if(!transactionMade){
-            System.out.println("No transactions were found.");
-        }
+        ArrayList<Transaction> yearToDateTransaction = displayYearToDate();
+        displayTransactions(yearToDateTransaction);
         pressEnterToContinue();
     }
 
-    private static boolean displayYearToDate(boolean transactionMade) {
+    private static ArrayList<Transaction> displayYearToDate() {
+        ArrayList<Transaction> yearToDateTransaction = new ArrayList<> ();
         boolean beforeTodayDate;
         boolean currentYear;
         for(Transaction transaction : transactions){
@@ -106,30 +90,25 @@ public class App {
                 beforeTodayDate = transaction.getDate().isAfter(ChronoLocalDate.from(localDateTime));
                 currentYear = transaction.getDate().getYear() == localDateTime.getYear();
                 if(currentYear && !beforeTodayDate){
-                    System.out.println(transaction.toTable());
-                    transactionMade = true;
+                    yearToDateTransaction.add(transaction);
                 }
             }
         }
-        return transactionMade;
+        return yearToDateTransaction;
     }
 
     private static void printPreviousMonth() {
-        boolean transactionMade = false;
         System.out.println("""
                 
                 \t\tPrevious Month Report
                --------------------------------------------------------------------------------""");
-        displayTableHeader();
-        transactionMade = displayPreviousMonth(transactionMade);
-
-        if(!transactionMade){
-            System.out.println("No transactions were found.");
-        }
+        ArrayList<Transaction> previousMonthTransaction = displayPreviousMonth();
+        displayTransactions(previousMonthTransaction);
         pressEnterToContinue();
     }
 
-    private static boolean displayPreviousMonth(boolean transactionMade) {
+    private static ArrayList<Transaction> displayPreviousMonth() {
+        ArrayList<Transaction> previousMonthTransaction = new ArrayList<> ();
         boolean currentYear;
         int previousMonth;
         for(Transaction transaction : transactions){
@@ -137,45 +116,40 @@ public class App {
                 currentYear = transaction.getDate().getYear() == localDateTime.getYear();
                 previousMonth = LocalDate.now().minusMonths(1).getMonthValue();
                 if( currentYear && transaction.getDate().getMonthValue() == previousMonth){
-                    System.out.println(transaction.toTable());
-                    transactionMade = true;
+                    previousMonthTransaction.add(transaction);
                 }
             }
         }
-        return transactionMade;
+        return previousMonthTransaction;
     }
 
     private static void printMonthToDate() {
-        boolean transactionMade = false;
         System.out.println("""
                 
                 \t\tMonth To Date Report
                 --------------------------------------------------------------------------------""");
-        displayTableHeader();
-        transactionMade = displayMonthToDate(transactionMade);
-
-        if(!transactionMade){
-            System.out.println("No transactions were found.");
-        }
+        ArrayList<Transaction> monthToDateTransaction = displayMonthToDate();
+        displayTransactions(monthToDateTransaction);
         pressEnterToContinue();
     }
 
-    private static boolean displayMonthToDate(boolean transactionMade) {
+    private static ArrayList<Transaction> displayMonthToDate() {
+        ArrayList<Transaction> monthToDateTransaction = new ArrayList<> ();
         boolean currentYear;
         int currentMonth;
         boolean currentDay;
+
         for(Transaction transaction : transactions){
             if(transaction != null){
                 currentYear = transaction.getDate().getYear() == localDateTime.getYear();
                 currentMonth = LocalDate.now().getMonthValue();
                 currentDay = transaction.getDate().getDayOfMonth() <= localDateTime.getDayOfMonth();
                 if( currentYear && transaction.getDate().getMonthValue() == currentMonth && currentDay){
-                    System.out.println(transaction.toTable());
-                    transactionMade = true;
+                    monthToDateTransaction.add(transaction);
                 }
             }
         }
-        return transactionMade;
+        return monthToDateTransaction;
     }
 
     private static void displayTransactions(ArrayList<Transaction> transactions){
