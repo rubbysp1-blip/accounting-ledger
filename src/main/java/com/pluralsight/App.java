@@ -17,8 +17,8 @@ public class App {
 
     public static void main(String[] args) {
         loadTransactions();
-        
-        runHomeScreen();
+        printPreviousMonth();
+        //runHomeScreen();
         input.close();
     }
 
@@ -110,12 +110,14 @@ public class App {
     private static ArrayList<Transaction> displayPreviousMonth() {
         ArrayList<Transaction> previousMonthTransaction = new ArrayList<> ();
         boolean currentYear;
-        int previousMonth;
+        //boolean previousMonth;
+        boolean lastMonth;
         for(Transaction transaction : transactions){
             if(transaction != null){
-                currentYear = transaction.getDate().getYear() == localDateTime.getYear();
-                previousMonth = LocalDate.now().minusMonths(1).getMonthValue();
-                if( currentYear && transaction.getDate().getMonthValue() == previousMonth){
+                currentYear = transaction.getDate().getYear() == LocalDate.now().minusMonths(1).getYear();
+                //previousMonth = LocalDate.now().minusMonths(1).getMonthValue();
+                lastMonth = transaction.getDate().getMonth() == LocalDate.now().minusMonths(1).getMonth();
+                if( currentYear && lastMonth){
                     previousMonthTransaction.add(transaction);
                 }
             }
@@ -243,6 +245,8 @@ public class App {
     private static void saveAddPayment(String paymentDescription, String paymentVendor, double paymentAmount) {
         LocalTime timeStamp = LocalTime.parse(localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         LocalDate dateStamp = LocalDate.parse(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+
 
         Transaction transaction = new Transaction(dateStamp, timeStamp, paymentDescription, paymentVendor, -paymentAmount);
 
