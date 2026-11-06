@@ -17,24 +17,24 @@ public class App {
 
     public static void main(String[] args) {
         loadTransactions();
-        printPreviousMonth();
-        //runHomeScreen();
+
+        runHomeScreen();
         input.close();
     }
 
-    private static void printSearchByVendor() {
+    private static void displaySearchByVendor() {
         //boolean vendorTransaction = false;
         String searchVendor = promptForString("\nEnter Vendor: ");
         System.out.print("""
                 
                 \t\tSearch By Vendor Report
                 --------------------------------------------------------------------------------""");
-        ArrayList<Transaction> vendorTransaction = displaySearchByVendor(searchVendor.toLowerCase());
+        ArrayList<Transaction> vendorTransaction = findSearchByVendor(searchVendor.toLowerCase());
         displayTransactions(vendorTransaction);
         pressEnterToContinue();
     }
 
-    private static ArrayList<Transaction> displaySearchByVendor(String searchVendor) {
+    private static ArrayList<Transaction> findSearchByVendor(String searchVendor) {
         ArrayList<Transaction> vendorTransactions = new ArrayList<>();
         for(Transaction transaction : transactions){
             if(transaction != null){
@@ -47,19 +47,19 @@ public class App {
         return vendorTransactions;
     }
 
-    private static void printPreviousYear() {
+    private static void displayPreviousYear() {
         System.out.println("""
                 
                 \t\tPrevious Year Report
                 --------------------------------------------------------------------------------""");
 
-        ArrayList<Transaction> previousYearTransaction = displayPreviousYearDate();
+        ArrayList<Transaction> previousYearTransaction = findPreviousYearDate();
         displayTransactions(previousYearTransaction);
 
         pressEnterToContinue();
     }
 
-    private static ArrayList<Transaction> displayPreviousYearDate(){
+    private static ArrayList<Transaction> findPreviousYearDate(){
         ArrayList<Transaction> previousYearTransactions = new ArrayList<> ();
         for(Transaction transaction : transactions){
             if(transaction != null){
@@ -71,17 +71,17 @@ public class App {
         return previousYearTransactions;
     }
 
-    private static void printYearToDate() {
+    private static void displayYearToDate() {
         System.out.println("""
                 
                 \t\tYear To Date Report
                 --------------------------------------------------------------------------------""");
-        ArrayList<Transaction> yearToDateTransaction = displayYearToDate();
+        ArrayList<Transaction> yearToDateTransaction = findYearToDate();
         displayTransactions(yearToDateTransaction);
         pressEnterToContinue();
     }
 
-    private static ArrayList<Transaction> displayYearToDate() {
+    private static ArrayList<Transaction> findYearToDate() {
         ArrayList<Transaction> yearToDateTransaction = new ArrayList<> ();
         boolean beforeTodayDate;
         boolean currentYear;
@@ -97,17 +97,17 @@ public class App {
         return yearToDateTransaction;
     }
 
-    private static void printPreviousMonth() {
+    private static void displayPreviousMonth() {
         System.out.println("""
                 
                 \t\tPrevious Month Report
                --------------------------------------------------------------------------------""");
-        ArrayList<Transaction> previousMonthTransaction = displayPreviousMonth();
+        ArrayList<Transaction> previousMonthTransaction = findPreviousMonth();
         displayTransactions(previousMonthTransaction);
         pressEnterToContinue();
     }
 
-    private static ArrayList<Transaction> displayPreviousMonth() {
+    private static ArrayList<Transaction> findPreviousMonth() {
         ArrayList<Transaction> previousMonthTransaction = new ArrayList<> ();
         boolean currentYear;
         //boolean previousMonth;
@@ -125,17 +125,17 @@ public class App {
         return previousMonthTransaction;
     }
 
-    private static void printMonthToDate() {
+    private static void displayMonthToDate() {
         System.out.println("""
                 
                 \t\tMonth To Date Report
                 --------------------------------------------------------------------------------""");
-        ArrayList<Transaction> monthToDateTransaction = displayMonthToDate();
+        ArrayList<Transaction> monthToDateTransaction = findMonthToDate();
         displayTransactions(monthToDateTransaction);
         pressEnterToContinue();
     }
 
-    private static ArrayList<Transaction> displayMonthToDate() {
+    private static ArrayList<Transaction> findMonthToDate() {
         ArrayList<Transaction> monthToDateTransaction = new ArrayList<> ();
         boolean currentYear;
         int currentMonth;
@@ -337,11 +337,11 @@ public class App {
             reportsScreenOption = input.nextLine().trim();
 
             switch (reportsScreenOption){
-                case "1"-> printMonthToDate();
-                case "2"-> printPreviousMonth();
-                case "3"-> printYearToDate();
-                case "4"-> printPreviousYear();
-                case "5"-> printSearchByVendor();
+                case "1"-> displayMonthToDate();
+                case "2"-> displayPreviousMonth();
+                case "3"-> displayYearToDate();
+                case "4"-> displayPreviousYear();
+                case "5"-> displaySearchByVendor();
                 case "0"-> System.out.println("Returning to ledger..");
                 default -> System.out.println("\nInvalid Input: Number entered is not valid, try Again.");
             }
