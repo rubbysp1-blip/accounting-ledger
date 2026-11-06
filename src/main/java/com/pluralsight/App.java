@@ -281,7 +281,7 @@ public class App {
     private static void saveTransaction(Transaction transaction) {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
-            bufferedWriter.write("\n" + transaction.toCSV());
+            bufferedWriter.write(transaction.toCSV() + "\n");
             bufferedWriter.close();
             transactions.add(transaction);
             System.out.print("\nTransaction has been added!");
