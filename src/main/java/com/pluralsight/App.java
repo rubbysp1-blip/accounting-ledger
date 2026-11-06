@@ -23,7 +23,6 @@ public class App {
     }
 
     private static void displaySearchByVendor() {
-        //boolean vendorTransaction = false;
         String searchVendor = promptForString("\nEnter Vendor: ");
         System.out.print("""
                 
@@ -110,12 +109,10 @@ public class App {
     private static ArrayList<Transaction> findPreviousMonth() {
         ArrayList<Transaction> previousMonthTransaction = new ArrayList<> ();
         boolean currentYear;
-        //boolean previousMonth;
         boolean lastMonth;
         for(Transaction transaction : transactions){
             if(transaction != null){
                 currentYear = transaction.getDate().getYear() == LocalDate.now().minusMonths(1).getYear();
-                //previousMonth = LocalDate.now().minusMonths(1).getMonthValue();
                 lastMonth = transaction.getDate().getMonth() == LocalDate.now().minusMonths(1).getMonth();
                 if( currentYear && lastMonth){
                     previousMonthTransaction.add(transaction);
@@ -220,7 +217,7 @@ public class App {
             }
             bufferedReader.close();
         } catch (IOException e) {
-            System.out.print("File not found.");;
+            System.out.print("File not found.");
         }
     }
 
@@ -291,7 +288,7 @@ public class App {
             pressEnterToContinue();
 
         } catch (IOException e) {
-            System.out.println("File not found.");;
+            System.out.println("Unable to add transaction.");
         }
     }
 
@@ -399,7 +396,7 @@ public class App {
     }
 
     public static ArrayList<Transaction> getTransactions(){
-        return new ArrayList<Transaction>();
+        return new ArrayList<>();
     }
 
     private static void displayTableHeader(){
