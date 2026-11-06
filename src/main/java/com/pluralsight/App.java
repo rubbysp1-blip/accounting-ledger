@@ -157,7 +157,7 @@ public class App {
         }else{
             displayTableHeader();
             for(Transaction transaction : transactions){
-                System.out.println(transaction.toTable());
+                System.out.println(transaction.toRow());
             }
         }
     }
@@ -170,7 +170,7 @@ public class App {
         displayTableHeader();
         for(Transaction transaction : transactions){
             if(transaction != null && transaction.getAmount() > 0){
-                System.out.println(transaction.toTable());
+                System.out.println(transaction.toRow());
             }
         }
         pressEnterToContinue();
@@ -184,7 +184,7 @@ public class App {
         displayTableHeader();
         for(Transaction transaction : transactions){
             if(transaction != null && transaction.getAmount() < 0){
-                System.out.println(transaction.toTable());
+                System.out.println(transaction.toRow());
             }
         }
         pressEnterToContinue();
@@ -197,7 +197,7 @@ public class App {
                 --------------------------------------------------------------------------------""");
         displayTableHeader();
         for(Transaction transaction : transactions){
-            System.out.println(transaction.toTable());
+            System.out.println(transaction.toRow());
         }
         pressEnterToContinue();
     }

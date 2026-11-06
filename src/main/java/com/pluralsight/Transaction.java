@@ -72,7 +72,7 @@ public class Transaction {
                 String.format("%.2f", amount);
     }
 
-    public String toTable(){
+    public String toRow(){
         return String.format("%-12s %-10s %-25s %-20s $%.2f",
                     date,
                     time,

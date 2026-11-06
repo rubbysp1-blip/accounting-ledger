@@ -231,3 +231,6 @@ date|time|description|vendor|amount
 2026-11-05|22:21:41|Test|Test|-12.00
 2026-11-05|22:31:24|Test|Test|-25.23
 2026-11-05|22:31:24|Test|Test|-123.00
+2026-11-06|10:30:34|Water Bill|AA|-150.23
+2026-11-06|12:09:02|Work|Work|1500.50
+2026-11-06|12:09:02|Water Bill|AAA|-112.20

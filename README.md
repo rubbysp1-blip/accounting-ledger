@@ -35,16 +35,16 @@ This interesting to me because reduces code and make this method for
 an action method
 
 ```java
-for(Transaction transaction : transactions){
-        if(transaction != null){
-String vendor = transaction.getVendor().toLowerCase();
-                if(vendor.contains(searchVendor)){
-        System.out.println(transaction.toString());
-vendorTransaction = true;
+ private static void displayTransactions(ArrayList<Transaction> transactions){
+    if(transactions.isEmpty()){
+        System.out.println("No transactions were found!");
+    }else{
+        displayTableHeader();
+        for(Transaction transaction : transactions){
+            System.out.println(transaction.toTable());
         }
-        }
-        }
-        return vendorTransaction;
+    }
+}
 ```
 
 ## Author
